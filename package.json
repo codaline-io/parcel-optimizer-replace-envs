@@ -1,0 +1,23 @@
+{
+  "name": "@codaline/parcel-optimizer-replace-envs",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
+  },
+  "engines": {
+    "parcel": "2.x",
+    "node": "14.x"
+  },
+  "description": "parcel v2 optimizer to replace process.env in files",
+  "license": "MIT",
+  "main": "lib/ReplaceEnvsOptimizer.js",
+  "source": "ReplaceEnvsOptimizer.ts",
+  "devDependencies": {
+    "@types/node": "14",
+    "parcel": "^2.0.0-beta.2",
+    "dotenv": "^10.0.0"
+  },
+  "peerDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
