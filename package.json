@@ -1,6 +1,6 @@
 {
   "name": "@codaline/parcel-optimizer-replace-envs",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.0",
   "scripts": {
     "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
   },
@@ -8,6 +8,20 @@
     "parcel": "2.x",
     "node": "14.x"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codaline-io/parcel-optimizer-replace-envs.git"
+  },
+  "author": "Marcus Kirsch & Bengt Weiße GbR (codaline)",
+  "bugs": {
+    "url": "https://github.com/codaline-io/parcel-optimizer-replace-envs"
+  },
+  "homepage": "https://github.com/codaline-io/parcel-optimizer-replace-envs",
+  "keywords": [
+    "parcel",
+    "v2",
+    "envs"
+  ],
   "description": "parcel v2 optimizer to replace process.env in files",
   "license": "MIT",
   "main": "lib/ReplaceEnvsOptimizer.js",
