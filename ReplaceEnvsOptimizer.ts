@@ -12,11 +12,13 @@ if (!isProduction) {
 export default new Optimizer({
   async optimize({ contents, map }) {
     Object.keys(process.env).forEach((ENV_KEY) => {
-      const containsEnv = contents.indexOf(ENV_KEY) > -1
+      const namedRegex = new RegExp(`process.env.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      const unnamedRegex = new RegExp(`process.env[${ENV_KEY}](?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      const containsEnv = namedRegex.test(contents) || unnamedRegex.test(contents)
 
       if (containsEnv) {
-        contents = contents.replace(new RegExp(`process.env.${ENV_KEY}`, 'g'), `"${process.env[ENV_KEY]}"`)
-        contents = contents.replace(new RegExp(`process.env[${ENV_KEY}]`, 'g'), `"${process.env[ENV_KEY]}"`)
+        contents = contents.replace(namedRegex, `"${process.env[ENV_KEY]}"$1`)
+        contents = contents.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$1`)
       }
     })
 
