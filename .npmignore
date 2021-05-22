@@ -1,5 +1,7 @@
 ./ReplaceEnvsOptimizer.ts
 ./package-lock.json
 .gitignore
-node_modules
-.parcel-cache
+.npmignore
+
+node_modules/
+.parcel-cache/
