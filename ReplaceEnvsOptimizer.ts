@@ -6,8 +6,7 @@ import { config } from 'dotenv'
 const isProduction = process.env.NODE_ENV === 'production'
 
 if (!isProduction) {
-  console.info('Dev env: Read dotenv file: ', resolve(process.cwd(), './.env'))
-  config({ path: resolve(process.cwd(), './.env') })
+  config({ path: !!process.env.DOTENV_FILE ? process.env.DOTENV_FILE : resolve(process.cwd(), './.env') })
 }
 
 export default new Optimizer({
