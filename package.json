@@ -1,12 +1,11 @@
 {
   "name": "@codaline-io/parcel-optimizer-replace-envs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
   },
   "engines": {
-    "parcel": ">=2.0.0-beta.3.1",
-    "node": "14.x"
+    "node": ">=16.x"
   },
   "repository": {
     "type": "git",
@@ -27,11 +26,11 @@
   "main": "lib/ReplaceEnvsOptimizer.js",
   "source": "ReplaceEnvsOptimizer.ts",
   "devDependencies": {
-    "@types/node": "14",
+    "@types/node": "16",
     "parcel": "^2.0.0-beta.3.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^14.2.0"
   },
   "peerDependencies": {
-    "dotenv": "^10.0.0"
+    "dotenv": ">=10.0.0"
   }
 }
