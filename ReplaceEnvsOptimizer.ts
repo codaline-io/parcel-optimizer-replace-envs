@@ -11,17 +11,18 @@ if (!isProduction) {
 
 export default new Optimizer({
   async optimize({ contents, map }) {
+    let fileContent = contents as string
     Object.keys(process.env).forEach((ENV_KEY) => {
       const namedRegex = new RegExp(`process.env.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
       const unnamedRegex = new RegExp(`process.env[${ENV_KEY}](?!(\\s*=|_|-|\\w|\\d))`, 'g')
-      const containsEnv = namedRegex.test(contents) || unnamedRegex.test(contents)
+      const containsEnv = namedRegex.test(fileContent) || unnamedRegex.test(fileContent)
 
       if (containsEnv) {
-        contents = contents.replace(namedRegex, `"${process.env[ENV_KEY]}"$1`)
-        contents = contents.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$1`)
+        fileContent = fileContent.replace(namedRegex, `"${process.env[ENV_KEY]}"$1`)
+        fileContent = fileContent.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$1`)
       }
     })
 
-    return { contents, map }
+    return { contents: fileContent, map }
   }
 })

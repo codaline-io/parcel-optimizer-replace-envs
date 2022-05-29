@@ -1,6 +1,6 @@
 {
   "name": "@codaline-io/parcel-optimizer-replace-envs",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "scripts": {
     "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
   },
@@ -25,6 +25,9 @@
   "license": "MIT",
   "main": "lib/ReplaceEnvsOptimizer.js",
   "source": "ReplaceEnvsOptimizer.ts",
+  "dependencies": {
+    "@parcel/plugin": ">=2.5.0 && <3"
+  },
   "devDependencies": {
     "@types/node": "16",
     "parcel": "^2.6.0",
