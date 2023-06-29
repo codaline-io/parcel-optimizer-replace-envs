@@ -18,8 +18,8 @@ export default new Optimizer({
       const containsEnv = namedRegex.test(fileContent) || unnamedRegex.test(fileContent)
 
       if (containsEnv) {
-        fileContent = fileContent.replace(namedRegex, `"${process.env[ENV_KEY]}"$1`)
-        fileContent = fileContent.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$1`)
+        fileContent = fileContent.replace(namedRegex, `"${process.env[ENV_KEY]}"$2`)
+        fileContent = fileContent.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$2`)
       }
     })
 
