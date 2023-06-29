@@ -1,6 +1,6 @@
 {
   "name": "@codaline-io/parcel-optimizer-replace-envs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
   },
