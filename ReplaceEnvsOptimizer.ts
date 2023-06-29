@@ -10,11 +10,11 @@ if (!isProduction) {
 }
 
 export default new Optimizer({
-  async optimize({ contents, map }) {
+  async optimize({ contents, map, options }) {
     let fileContent = contents as string
     Object.keys(process.env).forEach((ENV_KEY) => {
-      const namedRegex = new RegExp(`process.env.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
-      const unnamedRegex = new RegExp(`process.env[${ENV_KEY}](?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      const namedRegex = new RegExp(`(globalThis.)?process.env.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      const unnamedRegex = new RegExp(`(globalThis.)?process.env[${ENV_KEY}](?!(\\s*=|_|-|\\w|\\d))`, 'g')
       const containsEnv = namedRegex.test(fileContent) || unnamedRegex.test(fileContent)
 
       if (containsEnv) {
