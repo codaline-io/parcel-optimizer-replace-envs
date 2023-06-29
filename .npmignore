@@ -1,4 +1,5 @@
 ./ReplaceEnvsOptimizer.ts
+ReplaceEnvsOptimizer.ts
 ./package-lock.json
 .gitignore
 .npmignore
