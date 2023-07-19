@@ -12,15 +12,16 @@ if (!isProduction) {
 export default new Optimizer({
   async optimize({ contents, map, options }) {
     let fileContent = contents as string
-    Object.keys(process.env).forEach((ENV_KEY) => {
-      const namedRegex = new RegExp(`(globalThis.)?process.env.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
-      const unnamedRegex = new RegExp(`(globalThis.)?process.env[${ENV_KEY}](?!(\\s*=|_|-|\\w|\\d))`, 'g')
-      const containsEnv = namedRegex.test(fileContent) || unnamedRegex.test(fileContent)
 
-      if (containsEnv) {
-        fileContent = fileContent.replace(namedRegex, `"${process.env[ENV_KEY]}"$2`)
-        fileContent = fileContent.replace(unnamedRegex, `"${process.env[ENV_KEY]}"$2`)
-      }
+    fileContent = fileContent.replace(/(\bglobal(This)?\.)?process\.env(\.NODE_ENV|\["NODE_ENV"\|\['NODE_ENV'\])\b(?!(\\s*=|_|-|\\w|\\d))\b/g, `"${process.env.NODE_ENV}"`)
+
+    Object.keys(process.env).forEach((ENV_KEY) => {
+      const regex = new RegExp(`process.env\\.${ENV_KEY}(?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      fileContent = fileContent.replace(regex, `"${process.env[ENV_KEY]}"`)
+      const regex2 = new RegExp(`process.env\\["${ENV_KEY}"\\](?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      fileContent = fileContent.replace(regex2, `"${process.env[ENV_KEY]}"`)
+      const regex3 = new RegExp(`process.env\\['${ENV_KEY}'\\](?!(\\s*=|_|-|\\w|\\d))`, 'g')
+      fileContent = fileContent.replace(regex3, `"${process.env[ENV_KEY]}"`)
     })
 
     return { contents: fileContent, map }
