@@ -2,7 +2,8 @@
   "name": "@codaline-io/parcel-optimizer-replace-envs",
   "version": "0.2.2",
   "scripts": {
-    "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib"
+    "build": "parcel build ReplaceEnvsOptimizer.ts --no-cache --dist-dir lib",
+    "test": "npm run build && ava"
   },
   "engines": {
     "node": ">=16.x"
@@ -29,9 +30,11 @@
     "@parcel/plugin": ">=2.5.0 && <3"
   },
   "devDependencies": {
-    "@types/node": "16",
-    "parcel": "^2.6.0",
-    "dotenv": "^16.0.1"
+    "@ava/typescript": "^4.1.0",
+    "@types/node": "^16.18.39",
+    "ava": "^5.3.1",
+    "dotenv": "^16.3.1",
+    "parcel": "^2.9.3"
   },
   "peerDependencies": {
     "dotenv": ">=10.0.0"
