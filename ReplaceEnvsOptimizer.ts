@@ -3,23 +3,28 @@ import { resolve } from 'path'
 import { Optimizer } from '@parcel/plugin'
 import { config } from 'dotenv'
 
-const isProduction = process.env.NODE_ENV === 'production'
+const nodeEnv = process.env.NODE_ENV
+const isProduction = nodeEnv === 'production'
+let envs = process.env
 
 if (!isProduction) {
-  config({ path: !!process.env.DOTENV_FILE ? process.env.DOTENV_FILE : resolve(process.cwd(), './.env') })
+  const result = config({ path: !!process.env.DOTENV_FILE ? process.env.DOTENV_FILE : resolve(process.cwd(), './.env') })
+  if (result.parsed) {
+    envs = { NODE_ENV: nodeEnv, ...result.parsed }
+  }
 }
 // (\s*={2,3}|[^\w\d\$_\-"']|$|)
 export const optimize = async ({ contents, map }) => {
   let fileContent = contents as string
 
   // replace possible global(This) usages of process.env
-  fileContent = fileContent.replace(/(^|[^\.|\w|\$|-])(global(This)?\.)?process\.env(\['NODE_ENV'\]|\["NODE_ENV"\]|\.NODE_ENV)(\s*(={2,3}|!={1,2}|\)|\}|;|'|"|`|,|\?|\]|$|:|\s+[^=]))/g, `$1"${process.env.NODE_ENV}"$5`)
+  fileContent = fileContent.replace(/(^|[^\.|\w|\$|-])(global(This)?\.)?process\.env(\['NODE_ENV'\]|\["NODE_ENV"\]|\.NODE_ENV)(\s*(={2,3}|!={1,2}|\)|\}|;|'|"|`|,|\?|\]|$|:|\s+[^=]))/g, `$1"${envs.NODE_ENV}"$5`)
 
   const testAppendix = '(\\s*(={2,3}|!={1,2}|\\)|\\}|;|\'|"|`|,|\\?|\\]|$|:|\\s+[^=]))'
   const testPrefix = '(^|[^\\.|\\w|\\$|-])process\\.env'
 
   // replace all other process.envs
-  Object.keys(process.env).forEach((ENV_KEY) => {
+  Object.keys(envs).forEach((ENV_KEY) => {
     const regex = new RegExp(`${testPrefix}\\.${ENV_KEY}${testAppendix}`, 'g')
     fileContent = fileContent.replace(regex, `$1"${process.env[ENV_KEY]}"$2`)
     const regex2 = new RegExp(`${testPrefix}\\["${ENV_KEY}"\\]${testAppendix}`, 'g')
